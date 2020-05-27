@@ -1,6 +1,6 @@
 package servlet;
 
-import dao.UserDaoClass;
+import dao.UserJdbcDAO;
 import model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -15,12 +15,12 @@ import java.util.List;
 @WebServlet("/edit")
 public class EditServlet extends HttpServlet {
 
-    private final UserDaoClass userDaoClass = UserDaoClass.getInstance();
+    private final UserJdbcDAO userJdbcDAO = UserJdbcDAO.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
-        User existingUser = userDaoClass.getUser(id);
+        User existingUser = userJdbcDAO.getUser(id);
         req.setAttribute("user", existingUser);
         RequestDispatcher dispatcher = req.getRequestDispatcher("user_form.jsp");
         dispatcher.forward(req, resp);
@@ -35,10 +35,10 @@ public class EditServlet extends HttpServlet {
 
         User user = new User(id, name, email, password);
 
-        userDaoClass.updateUser(user);
+        userJdbcDAO.updateUser(user);
 
         resp.setContentType("text/html;charset=UTF-8");
-        List<User> users = userDaoClass.getAllUsers();
+        List<User> users = userJdbcDAO.getAllUsers();
         req.setAttribute("users", users);
         RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
         dispatcher.forward(req, resp);

@@ -1,6 +1,6 @@
 package servlet;
 
-import dao.UserDaoClass;
+import dao.UserJdbcDAO;
 import model.User;
 
 import javax.servlet.RequestDispatcher;
@@ -15,7 +15,7 @@ import java.util.List;
 @WebServlet("/add")
 public class AddServlet extends HttpServlet {
 
-    private final UserDaoClass userDaoClass = UserDaoClass.getInstance();
+    private final UserJdbcDAO userJdbcDAO = UserJdbcDAO.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -31,9 +31,9 @@ public class AddServlet extends HttpServlet {
 
         User user = new User(name, email, password);
 
-        userDaoClass.addUser(user);
+        userJdbcDAO.addUser(user);
         resp.setContentType("text/html;charset=UTF-8");
-        List<User> users = userDaoClass.getAllUsers();
+        List<User> users = userJdbcDAO.getAllUsers();
         req.setAttribute("users", users);
         RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
         dispatcher.forward(req, resp);

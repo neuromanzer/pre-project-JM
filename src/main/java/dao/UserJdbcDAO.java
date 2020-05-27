@@ -10,18 +10,19 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDaoClass {
+public class UserJdbcDAO implements UserDAO {
 
 
-    private static UserDaoClass instance;
+    private static UserJdbcDAO instance;
 
-    public static UserDaoClass getInstance() {
+    public static UserJdbcDAO getInstance() {
         if (instance == null) {
-            instance = new UserDaoClass();
+            instance = new UserJdbcDAO();
         }
         return instance;
     }
 
+    @Override
     public List<User> getAllUsers() {
         String query = "select * from users";
         List<User> users = new ArrayList<>();
@@ -41,6 +42,7 @@ public class UserDaoClass {
         return null;
     }
 
+    @Override
     public User getUser(Long userId) {
         String query = "select * from users where id = ?";
         User user = null;
@@ -61,6 +63,7 @@ public class UserDaoClass {
         return null;
     }
 
+    @Override
     public void addUser(User user) {
         String query = "insert into users (name, email, password) values(?, ?, ?)";
         try (PreparedStatement ps = JdbcDBHelper.getMysqlConnection().prepareStatement(query)) {
@@ -73,6 +76,7 @@ public class UserDaoClass {
         }
     }
 
+    @Override
     public void updateUser(User user) {
         String query = "update users set name = ?, email = ?, password = ? where id = ?";
         try (PreparedStatement ps = JdbcDBHelper.getMysqlConnection().prepareStatement(query)) {
@@ -86,6 +90,7 @@ public class UserDaoClass {
         }
     }
 
+    @Override
     public void deleteUser(User user) {
         String query = "delete from users where id = ?";
         try (PreparedStatement ps = JdbcDBHelper.getMysqlConnection().prepareStatement(query)) {
