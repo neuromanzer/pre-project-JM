@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class JdbcDBHelper {
+public class DBHelper {
 
     private static final String connectionUrl;
 
@@ -31,7 +31,7 @@ public class JdbcDBHelper {
         connectionUrl = url.toString();
     }
 
-    private JdbcDBHelper() {
+    private DBHelper() {
 
     }
 
