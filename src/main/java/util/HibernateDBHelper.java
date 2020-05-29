@@ -36,7 +36,6 @@ public class HibernateDBHelper {
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
         builder.applySettings(configuration.getProperties());
         ServiceRegistry serviceRegistry = builder.build();
-        System.out.println("hhiber is up");
         return configuration.buildSessionFactory(serviceRegistry);
     }
 }
