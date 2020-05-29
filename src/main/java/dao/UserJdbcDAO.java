@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserJdbcDAO implements UserDAO {
+public class UserJdbcDAO  {
 
 
     private static UserJdbcDAO instance;
@@ -22,7 +22,6 @@ public class UserJdbcDAO implements UserDAO {
         return instance;
     }
 
-    @Override
     public List<User> getAllUsers() {
         String query = "select * from users";
         List<User> users = new ArrayList<>();
@@ -42,7 +41,6 @@ public class UserJdbcDAO implements UserDAO {
         return null;
     }
 
-    @Override
     public User getUser(Long userId) {
         String query = "select * from users where id = ?";
         User user = null;
@@ -63,7 +61,6 @@ public class UserJdbcDAO implements UserDAO {
         return null;
     }
 
-    @Override
     public void addUser(User user) {
         String query = "insert into users (name, email, password) values(?, ?, ?)";
         try (PreparedStatement ps = JdbcDBHelper.getMysqlConnection().prepareStatement(query)) {
@@ -76,7 +73,6 @@ public class UserJdbcDAO implements UserDAO {
         }
     }
 
-    @Override
     public void updateUser(User user) {
         String query = "update users set name = ?, email = ?, password = ? where id = ?";
         try (PreparedStatement ps = JdbcDBHelper.getMysqlConnection().prepareStatement(query)) {
@@ -90,7 +86,6 @@ public class UserJdbcDAO implements UserDAO {
         }
     }
 
-    @Override
     public void deleteUser(User user) {
         String query = "delete from users where id = ?";
         try (PreparedStatement ps = JdbcDBHelper.getMysqlConnection().prepareStatement(query)) {
