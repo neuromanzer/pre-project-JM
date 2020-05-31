@@ -1,3 +1,4 @@
+/*
 package service;
 
 import dao.UserDAO;
@@ -38,3 +39,4 @@ public class UserService {
         userDAO.deleteUser(user);
     }
 }
+*/
