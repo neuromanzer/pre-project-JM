@@ -33,7 +33,7 @@ public class DBHelper {
                 .append("password=root&")       //password
                 .append("serverTimezone=UTC");  //time zone
 
-        System.out.println("URL: " + url + "\n");
+        //System.out.println("URL: " + url + "\n");
 
         connectionUrl = url.toString();
     }
@@ -61,13 +61,12 @@ public class DBHelper {
         configuration.setProperty("hibernate.connection.password", "root");
         configuration.setProperty("hibernate.show_sql", "true");
         configuration.setProperty("hibernate.hbm2ddl.auto", "update");
-        System.out.println("hiber is up");
         return configuration;
     }
 
-
     public Connection getConnection() {
         try {
+            System.out.println("JDBC");
             return DriverManager.getConnection(connectionUrl);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -80,7 +79,7 @@ public class DBHelper {
         StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
         builder.applySettings(configuration.getProperties());
         ServiceRegistry serviceRegistry = builder.build();
-
+        System.out.println("HIBERNATE");
         return configuration.buildSessionFactory(serviceRegistry);
     }
 }

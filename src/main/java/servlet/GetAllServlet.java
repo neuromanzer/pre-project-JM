@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/list")
+@WebServlet("/admin")
 public class GetAllServlet extends HttpServlet {
 
     private final Service service = Service.getInstance();
@@ -22,7 +22,7 @@ public class GetAllServlet extends HttpServlet {
         resp.setContentType("text/html;charset=UTF-8");
         List<User> users = service.getAllUsers();
         req.setAttribute("users", users);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/admin_page.jsp");
         dispatcher.forward(req, resp);
     }
 }

@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet("/add")
+@WebServlet("/admin/add")
 public class AddServlet extends HttpServlet {
 
     private final Service service = Service.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher dispatcher = req.getRequestDispatcher("user_form.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/user_form.jsp");
         dispatcher.forward(req, resp);
     }
 
@@ -28,15 +28,16 @@ public class AddServlet extends HttpServlet {
         String name = req.getParameter("name");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
+        String role = req.getParameter("role");
 
-        User user = new User(name, email, password);
+        User user = new User(name, email, password, role);
 
         service.addUser(user);
 
         resp.setContentType("text/html;charset=UTF-8");
         List<User> users = service.getAllUsers();
         req.setAttribute("users", users);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("index.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/admin_page.jsp");
         dispatcher.forward(req, resp);
     }
 }

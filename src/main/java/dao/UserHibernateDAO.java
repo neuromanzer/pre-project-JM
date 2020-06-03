@@ -6,19 +6,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.DBHelper;
 
+import javax.persistence.Query;
 import java.util.List;
 
 public class UserHibernateDAO implements UserDAO {
 
     private static UserHibernateDAO instance;
-    //private final SessionFactory sessionFactory;
     private final DBHelper dbHelper = DBHelper.getInstance();
-/*
-
-    private UserHibernateDAO(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-*/
 
     public static UserHibernateDAO getInstance() {
         if (instance == null) {
@@ -44,7 +38,7 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public User getUser(Long userId) {
+    public User getUserById(Long userId) {
         try {
             Session session = dbHelper.getConfiguration().openSession();
             Transaction transaction = session.beginTransaction();
@@ -58,6 +52,47 @@ public class UserHibernateDAO implements UserDAO {
         }
         return null;
     }
+
+    @Override
+    public User getUserByNamePassword(String name, String password) {
+        User user;
+        try {
+            Session session = dbHelper.getConfiguration().openSession();
+            Transaction transaction = session.beginTransaction();
+            Query query = session.createQuery("from User u where u.name = :name and u.password = :password");
+            query.setParameter("name", name);
+            query.setParameter("password", password);
+            user = (User) query.getResultList().get(0);
+            transaction.commit();
+            session.close();
+            System.out.println("hiber get users");
+            return user;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isExistUser(String name, String password) {
+        User user;
+        try {
+            Session session = dbHelper.getConfiguration().openSession();
+            Transaction transaction = session.beginTransaction();
+            Query query = session.createQuery("from User u where u.name = :name and u.password = :password");
+            query.setParameter("name", name);
+            query.setParameter("password", password);
+            user = (User) query.getResultList().get(0);
+            Boolean isExist = session.contains(user);
+            transaction.commit();
+            session.close();
+            return isExist;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
     @Override
     public void addUser(User user) {

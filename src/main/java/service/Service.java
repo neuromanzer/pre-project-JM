@@ -21,8 +21,16 @@ public class Service {
         return userDaoFactory.getDao().getAllUsers();
     }
 
-    public User getUser(Long userId) throws IOException {
-        return userDaoFactory.getDao().getUser(userId);
+    public User getUserById(Long userId) throws IOException {
+        return userDaoFactory.getDao().getUserById(userId);
+    }
+
+    public User getUserByNamePassword(String name, String password) throws IOException {
+        return userDaoFactory.getDao().getUserByNamePassword(name, password);
+    }
+
+    public boolean isExistUser(String name, String password) throws IOException {   //mine
+        return userDaoFactory.getDao().isExistUser(name, password);
     }
 
     public void addUser(User user) throws IOException {
