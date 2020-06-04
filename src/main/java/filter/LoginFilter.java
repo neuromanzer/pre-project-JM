@@ -45,7 +45,7 @@ public class LoginFilter implements Filter {
                 } else if (service.getUserByNamePassword(name, password).getRole().equalsIgnoreCase("user")) {
                     resp.sendRedirect("/user");
                 }else {
-                    out.println("I didn't found your role");
+                    out.println("No role");
                 }
             } else if (sessionId == user.getId()) {
                 if (service.getUserByNamePassword(name, password).getRole().equalsIgnoreCase("admin")) {
@@ -53,7 +53,7 @@ public class LoginFilter implements Filter {
                 } else if (service.getUserByNamePassword(name, password).getRole().equalsIgnoreCase("user")) {
                     resp.sendRedirect("/user");
                 }else {
-                    out.println("I didn't found your role");
+                    out.println("No role");
                 }
             }
         } else {
@@ -62,27 +62,7 @@ public class LoginFilter implements Filter {
                 rd.forward(req, resp);
             }
         }
-
-
-
-/*
-
-        if (service.isExistUser(name, password)) {
-            if (service.getUserByNamePassword(name, password).getRole().equalsIgnoreCase("admin")) {
-                resp.sendRedirect("/admin");
-            } else if (service.getUserByNamePassword(name, password).getRole().equalsIgnoreCase("user")) {
-                resp.sendRedirect("/user");
-            }
-        } else if (!service.isExistUser(name, password) || name == null || password == null) {
-            RequestDispatcher rd = req.getRequestDispatcher("login.jsp");
-            rd.forward(req, resp);
-        }
-*/
-
-
-
     }
-
 
     @Override
     public void destroy() {

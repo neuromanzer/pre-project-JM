@@ -19,14 +19,6 @@ public class UserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    /*    resp.setContentType("text/html;charset=UTF-8");
-
-        final String name = req.getParameter("name");
-        req.setAttribute("name", name);
-        //resp.sendRedirect("user_page.jsp");
-        RequestDispatcher dispatcher = req.getRequestDispatcher("user_page.jsp");
-        dispatcher.forward(req, resp);
-*/
         HttpSession session = req.getSession();
         Long id = (Long) session.getAttribute("id");
 
