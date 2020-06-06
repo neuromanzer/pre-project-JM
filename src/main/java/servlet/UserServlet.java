@@ -1,7 +1,7 @@
 package servlet;
 
 import model.User;
-import service.Service;
+import service.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,19 +15,18 @@ import java.io.IOException;
 @WebServlet("/user")
 public class UserServlet extends HttpServlet {
 
-    private final Service service = Service.getInstance();
+    private final UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         Long id = (Long) session.getAttribute("id");
 
-        User user = service.getUserById(id);
+        User user = userServiceImpl.getUserById(id);
 
         req.setAttribute("user", user);
 
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("user_page.jsp");
         requestDispatcher.forward(req, resp);
-
     }
 }

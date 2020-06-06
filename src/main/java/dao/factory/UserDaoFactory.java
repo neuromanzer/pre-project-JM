@@ -1,15 +1,20 @@
-package dao;
+package dao.factory;
+
+import dao.UserDAO;
+import dao.UserHibernateDAO;
+import dao.UserJdbcDAO;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class UserDaoFactory {
+public class UserDaoFactory implements FactoryDAO {
 
-    private static final UserHibernateDAO userHibernateDAO = UserHibernateDAO.getInstance();
-    private static final UserJdbcDAO userJdbcDAO = UserJdbcDAO.getInstance();
-
+    @Override
     public UserDAO getDao() throws IOException {
+
+        UserDAO userDAO;
+
         ClassLoader loader = this.getClass().getClassLoader();
         InputStream fis = loader.getResourceAsStream(".properties");
         Properties p = new Properties();
@@ -17,11 +22,11 @@ public class UserDaoFactory {
 
         switch (p.getProperty("daotype")) {
             case "j":
-                System.out.println("factory jdbc");
-                return userJdbcDAO;
+                userDAO = UserJdbcDAO.getInstance();
+                return userDAO;
             case "h":
-                System.out.println("factory hiber");
-                return userHibernateDAO;
+                userDAO = UserHibernateDAO.getInstance();
+                return userDAO;
         }
         return null;
     }

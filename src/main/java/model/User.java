@@ -27,41 +27,18 @@ public class User {
 
     }
 
-    public User(Long id) {
+    public User(Long id) {//+
         this.id = id;
     }
 
-    public User(String email) {
-        this.email = email;
-
-    }
-
-    public User(String email, String password) {
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(String name, String email, String password, String role) {
+    public User(String name, String email, String password, String role) {//+
         this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public User(Long id, String name, String email, String password) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
-    public User(Long id, String name, String email, String password, String role) {
+    public User(Long id, String name, String email, String password, String role) { //+
         this.id = id;
         this.name = name;
         this.email = email;

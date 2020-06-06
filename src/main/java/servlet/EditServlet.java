@@ -1,7 +1,7 @@
 package servlet;
 
 import model.User;
-import service.Service;
+import service.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,17 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/admin/edit")
 public class EditServlet extends HttpServlet {
 
-    private final Service service = Service.getInstance();
+    private final UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
-        User existingUser = service.getUserById(id);
+        User existingUser = userServiceImpl.getUserById(id);
         req.setAttribute("user", existingUser);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/user_form.jsp");
         dispatcher.forward(req, resp);
@@ -36,12 +35,8 @@ public class EditServlet extends HttpServlet {
 
         User user = new User(id, name, email, password, role);
 
-        service.updateUser(user);
+        userServiceImpl.updateUser(user);
 
-        resp.setContentType("text/html;charset=UTF-8");
-        List<User> users = service.getAllUsers();
-        req.setAttribute("users", users);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/admin_page.jsp");
-        dispatcher.forward(req, resp);
+        resp.sendRedirect("/admin");
     }
 }

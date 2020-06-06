@@ -1,5 +1,6 @@
 package servlet;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,8 @@ public class LogoutServlet extends HttpServlet {
         if(session != null){
             session.invalidate();
         }
-        resp.sendRedirect("login.jsp");
+
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/login");
+        requestDispatcher.forward(req, resp);
     }
 }

@@ -1,7 +1,7 @@
 package servlet;
 
 import model.User;
-import service.Service;
+import service.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,12 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet("/admin/add")
 public class AddServlet extends HttpServlet {
 
-    private final Service service = Service.getInstance();
+    private final UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,12 +31,8 @@ public class AddServlet extends HttpServlet {
 
         User user = new User(name, email, password, role);
 
-        service.addUser(user);
+        userServiceImpl.addUser(user);
 
-        resp.setContentType("text/html;charset=UTF-8");
-        List<User> users = service.getAllUsers();
-        req.setAttribute("users", users);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/admin_page.jsp");
-        dispatcher.forward(req, resp);
+        resp.sendRedirect("/admin");
     }
 }

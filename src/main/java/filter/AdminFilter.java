@@ -1,7 +1,7 @@
 package filter;
 
 import model.User;
-import service.Service;
+import service.UserServiceImpl;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -13,7 +13,7 @@ import java.io.IOException;
 @WebFilter("/admin/*")
 public class AdminFilter implements Filter {
 
-    private final Service service = Service.getInstance();
+    private final UserServiceImpl userServiceImpl = UserServiceImpl.getInstance();
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -30,14 +30,12 @@ public class AdminFilter implements Filter {
 
         if (sessionId == null) {
             resp.sendRedirect("/login");
-        } else if (sessionId != null) {
-            User user = service.getUserById(sessionId);
+        } else {
+            User user = userServiceImpl.getUserById(sessionId);
             if (user.getRole().equalsIgnoreCase("ADMIN")) {
-                filterChain.doFilter(req,resp);
-            } else if (user.getRole().equalsIgnoreCase("USER")) {
-                resp.sendRedirect("/user");
+                filterChain.doFilter(req, resp);
             } else {
-                resp.sendRedirect("/login");
+                resp.sendRedirect("/logout");
             }
         }
     }

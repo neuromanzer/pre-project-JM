@@ -9,28 +9,22 @@
 <div align="center">
     <h1>User Management Application</h1>
     <h2>
-        <a href="/admin/add">Add User</a>
-        &nbsp;&nbsp;&nbsp;
+
         <a href="/admin">List All Users</a>
 
     </h2>
 </div>
 <div align="center">
     <c:if test="${user != null}">
-    <form action="/admin/edit" method="post">
+    <form action="/admin/delete" method="post">
         </c:if>
-        <c:if test="${user == null}">
-        <form action="/admin/add" method="post">
-            </c:if>
             <table border="1" cellpadding="5">
                 <caption>
                     <h2>
                         <c:if test="${user != null}">
-                            Edit User
+                            Delete User
                         </c:if>
-                        <c:if test="${user == null}">
-                            Add User
-                        </c:if>
+
                     </h2>
                 </caption>
                 <c:if test="${user != null}">
@@ -70,7 +64,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" align="center">
-                        <input type="submit" value="Save"/>
+                        <input type="submit" value="Delete"/>
                     </td>
                 </tr>
             </table>
