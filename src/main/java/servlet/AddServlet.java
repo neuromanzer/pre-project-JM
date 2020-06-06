@@ -31,7 +31,7 @@ public class AddServlet extends HttpServlet {
 
         User user = new User(name, email, password, role);
 
-        userServiceImpl.addUser(user);
+        userServiceImpl.add(user);
 
         resp.sendRedirect("/admin");
     }

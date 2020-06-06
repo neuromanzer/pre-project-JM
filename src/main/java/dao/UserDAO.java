@@ -6,18 +6,18 @@ import java.util.List;
 
 public interface UserDAO {
 
-    List<User> getAllUsers();
+    List<User> getAll();
 
-    User getUserById(Long userId);
+    User getById(Long userId);
 
-    User getUserByNamePassword(String name, String password);
+    User getByNameAndPassword(String name, String password);
 
-    boolean isExistUser(String name, String password);
+    boolean isExist(String name, String password);
 
-    void addUser(User user);
+    void add(User user);
 
-    void updateUser(User user);
+    void update(User user);
 
-    void deleteUser(User user);
+    void delete(User user);
 
 }

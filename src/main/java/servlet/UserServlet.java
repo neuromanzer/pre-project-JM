@@ -22,7 +22,7 @@ public class UserServlet extends HttpServlet {
         HttpSession session = req.getSession();
         Long id = (Long) session.getAttribute("id");
 
-        User user = userServiceImpl.getUserById(id);
+        User user = userServiceImpl.getById(id);
 
         req.setAttribute("user", user);
 

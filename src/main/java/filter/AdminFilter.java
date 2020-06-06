@@ -31,7 +31,7 @@ public class AdminFilter implements Filter {
         if (sessionId == null) {
             resp.sendRedirect("/login");
         } else {
-            User user = userServiceImpl.getUserById(sessionId);
+            User user = userServiceImpl.getById(sessionId);
             if (user.getRole().equalsIgnoreCase("ADMIN")) {
                 filterChain.doFilter(req, resp);
             } else {

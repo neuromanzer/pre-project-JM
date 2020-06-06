@@ -19,7 +19,7 @@ public class EditServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Long id = Long.valueOf(req.getParameter("id"));
-        User existingUser = userServiceImpl.getUserById(id);
+        User existingUser = userServiceImpl.getById(id);
         req.setAttribute("user", existingUser);
         RequestDispatcher dispatcher = req.getRequestDispatcher("/admin/user_form.jsp");
         dispatcher.forward(req, resp);
@@ -35,7 +35,7 @@ public class EditServlet extends HttpServlet {
 
         User user = new User(id, name, email, password, role);
 
-        userServiceImpl.updateUser(user);
+        userServiceImpl.update(user);
 
         resp.sendRedirect("/admin");
     }

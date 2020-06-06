@@ -20,37 +20,37 @@ public class UserServiceImpl implements UserServise {
     }
 
     @Override
-    public List<User> getAllUsers() throws IOException {
-        return userDaoFactory.getDao().getAllUsers();
+    public List<User> getAll() throws IOException {
+        return userDaoFactory.getDao().getAll();
     }
 
     @Override
-    public User getUserById(Long userId) throws IOException {
-        return userDaoFactory.getDao().getUserById(userId);
+    public User getById(Long userId) throws IOException {
+        return userDaoFactory.getDao().getById(userId);
     }
 
     @Override
-    public User getUserByNamePassword(String name, String password) throws IOException {
-        return userDaoFactory.getDao().getUserByNamePassword(name, password);
+    public User getByNamePassword(String name, String password) throws IOException {
+        return userDaoFactory.getDao().getByNameAndPassword(name, password);
     }
 
     @Override
-    public boolean isExistUser(String name, String password) throws IOException {
-        return userDaoFactory.getDao().isExistUser(name, password);
+    public boolean isExist(String name, String password) throws IOException {
+        return userDaoFactory.getDao().isExist(name, password);
     }
 
     @Override
-    public void addUser(User user) throws IOException {
-        userDaoFactory.getDao().addUser(user);
+    public void add(User user) throws IOException {
+        userDaoFactory.getDao().add(user);
     }
 
     @Override
-    public void updateUser(User user) throws IOException {
-        userDaoFactory.getDao().updateUser(user);
+    public void update(User user) throws IOException {
+        userDaoFactory.getDao().update(user);
     }
 
     @Override
-    public void deleteUser(User user) throws IOException {
-        userDaoFactory.getDao().deleteUser(user);
+    public void delete(User user) throws IOException {
+        userDaoFactory.getDao().delete(user);
     }
 }

@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import util.DBHelper;
 
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAll() {
         try {
             Session session = sessionFactory.openSession();
             List<User> users = session.createQuery("from User").list();
@@ -40,7 +41,7 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public User getUserById(Long userId) {
+    public User getById(Long userId) {
         try {
             Session session = sessionFactory.openSession();
             User user = session.get(User.class, userId);
@@ -53,24 +54,52 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public User getUserByNamePassword(String name, String password) {
+    public User getByNameAndPassword(String name, String password) {
         User user;
-        try {
-            Session session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
+            //Session session = sessionFactory.openSession();
             Query query = session.createQuery("from User u where u.name = :name and u.password = :password");
             query.setParameter("name", name);
             query.setParameter("password", password);
-            user = (User) query.getResultList().get(0);
-            session.close();
-            return user;
+            //user = (User) query.setMaxResults(1).getSingleResult();
+            //user = (User) query.getResultList().get(0);
+            //session.close();
+            return (User) query.setMaxResults(1).getSingleResult();
         } catch (HibernateException e) {
             e.printStackTrace();
+        } catch (NoResultException nre) {
+            return null;
         }
         return null;
     }
 
+    /*
+       @Override
+       public User getByNameAndPassword(String name, String password) {
+           User user;
+           try {
+               Session session = sessionFactory.openSession();
+               Query query = session.createQuery("from User u where u.name = :name and u.password = :password");
+               query.setParameter("name", name);
+               query.setParameter("password", password);
+               user = (User) query.getResultList().get(0);
+               session.close();
+               return user;
+           } catch (HibernateException e) {
+               e.printStackTrace();
+           }
+           return null;
+       }
+   */
+
     @Override
-    public boolean isExistUser(String name, String password) {
+    public boolean isExist(String name, String password) {
+        User user = getByNameAndPassword(name, password);
+        return user != null;
+    }
+
+   /* @Override
+    public boolean isExist(String name, String password) {
         User user;
         try {
             Session session = sessionFactory.openSession();
@@ -86,10 +115,10 @@ public class UserHibernateDAO implements UserDAO {
         }
         return false;
     }
-
+*/
 
     @Override
-    public void addUser(User user) {
+    public void add(User user) {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
@@ -102,7 +131,7 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void update(User user) {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
@@ -115,7 +144,7 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void delete(User user) {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();

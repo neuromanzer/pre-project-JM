@@ -29,25 +29,43 @@ public class LoginFilter implements Filter {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
 
-        User user = userServiceImpl.getUserByNamePassword(name, password);
+        //User user = userServiceImpl.getByNamePassword(name, password);
 
         HttpSession session = req.getSession();
 
         Long sessionId = (Long) session.getAttribute("id");
+/*
 
-
-        if (userServiceImpl.isExistUser(name, password)) {
+        if (userServiceImpl.isExist(name, password)) {
             session.setAttribute("id", user.getId());
-            if (userServiceImpl.isExistUser(name, password)) {
-                if (userServiceImpl.getUserByNamePassword(name, password).getRole().equalsIgnoreCase("admin")) {
+            if (userServiceImpl.isExist(name, password)) {
+                if (userServiceImpl.getByNamePassword(name, password).getRole().equalsIgnoreCase("admin")) {
                     resp.sendRedirect("/admin");
-                } else if (userServiceImpl.getUserByNamePassword(name, password).getRole().equalsIgnoreCase("user")) {
+                } else if (userServiceImpl.getByNamePassword(name, password).getRole().equalsIgnoreCase("user")) {
                     resp.sendRedirect("/user");
                 }
             }
         }else  {
             resp.sendRedirect("/logout");
         }
+*/
+
+
+        if (name != null && password != null) {
+            User user = userServiceImpl.getByNamePassword(name, password);
+            if (user != null) {
+                session.setAttribute("id", user.getId());
+                if (user.getRole().equalsIgnoreCase("admin")) {
+                    resp.sendRedirect("/admin");
+                    return;
+                } else if (user.getRole().equalsIgnoreCase("user")) {
+                    resp.sendRedirect("/user");
+                    return;
+                }
+            }
+        }
+        resp.sendRedirect("/logout");
+
 
 /*
 

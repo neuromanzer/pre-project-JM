@@ -28,6 +28,6 @@ public class UserDaoFactory implements FactoryDAO {
                 userDAO = UserHibernateDAO.getInstance();
                 return userDAO;
         }
-        return null;
+        throw new IllegalStateException("FactoryDao::getDao ERROR! Wrong parameter");
     }
 }

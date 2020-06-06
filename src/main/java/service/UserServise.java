@@ -7,17 +7,17 @@ import java.util.List;
 
 public interface UserServise {
 
-    List<User> getAllUsers() throws IOException;
+    List<User> getAll() throws IOException;
 
-    User getUserById(Long userId) throws IOException;
+    User getById(Long userId) throws IOException;
 
-    User getUserByNamePassword(String name, String password) throws IOException;
+    User getByNamePassword(String name, String password) throws IOException;
 
-    boolean isExistUser(String name, String password) throws IOException;
+    boolean isExist(String name, String password) throws IOException;
 
-    void addUser(User user) throws IOException;
+    void add(User user) throws IOException;
 
-    void updateUser(User user) throws IOException;
+    void update(User user) throws IOException;
 
-    void deleteUser(User user) throws IOException;
+    void delete(User user) throws IOException;
 }

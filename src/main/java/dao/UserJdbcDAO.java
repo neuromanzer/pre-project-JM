@@ -25,7 +25,7 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAll() {
         String query = "select * from users";
         List<User> users = new ArrayList<>();
         try (Statement st = connection.createStatement()) {
@@ -46,7 +46,7 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public User getUserById(Long userId) {
+    public User getById(Long userId) {
         String query = "select * from users where id = ?";
         User user = null;
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -68,7 +68,7 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public User getUserByNamePassword(String name, String password) {
+    public User getByNameAndPassword(String name, String password) {
         String query = "select * from users where name = ? and password = ?";
         User user = null;
         try (PreparedStatement ps = connection.prepareStatement(query)) {
@@ -91,7 +91,7 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public boolean isExistUser(String name, String password) {
+    public boolean isExist(String name, String password) {
         String query = "select * from users where name = ? and password = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, name);
@@ -109,7 +109,7 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public void addUser(User user) {
+    public void add(User user) {
         String query = "insert into users (name, email, password, role) values(?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, user.getName());
@@ -123,7 +123,7 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public void updateUser(User user) {
+    public void update(User user) {
         String query = "update users set name = ?, email = ?, password = ?, role = ? where id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, user.getName());
@@ -138,7 +138,7 @@ public class UserJdbcDAO implements UserDAO {
     }
 
     @Override
-    public void deleteUser(User user) {
+    public void delete(User user) {
         String query = "delete from users where id = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, user.getId());
