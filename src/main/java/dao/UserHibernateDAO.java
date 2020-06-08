@@ -28,6 +28,7 @@ public class UserHibernateDAO implements UserDAO {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<User> getAll() {
         try {
             Session session = sessionFactory.openSession();
@@ -57,13 +58,9 @@ public class UserHibernateDAO implements UserDAO {
     public User getByNameAndPassword(String name, String password) {
         User user;
         try (Session session = sessionFactory.openSession()) {
-            //Session session = sessionFactory.openSession();
             Query query = session.createQuery("from User u where u.name = :name and u.password = :password");
             query.setParameter("name", name);
             query.setParameter("password", password);
-            //user = (User) query.setMaxResults(1).getSingleResult();
-            //user = (User) query.getResultList().get(0);
-            //session.close();
             return (User) query.setMaxResults(1).getSingleResult();
         } catch (HibernateException e) {
             e.printStackTrace();
@@ -73,49 +70,11 @@ public class UserHibernateDAO implements UserDAO {
         return null;
     }
 
-    /*
-       @Override
-       public User getByNameAndPassword(String name, String password) {
-           User user;
-           try {
-               Session session = sessionFactory.openSession();
-               Query query = session.createQuery("from User u where u.name = :name and u.password = :password");
-               query.setParameter("name", name);
-               query.setParameter("password", password);
-               user = (User) query.getResultList().get(0);
-               session.close();
-               return user;
-           } catch (HibernateException e) {
-               e.printStackTrace();
-           }
-           return null;
-       }
-   */
-
     @Override
     public boolean isExist(String name, String password) {
         User user = getByNameAndPassword(name, password);
         return user != null;
     }
-
-   /* @Override
-    public boolean isExist(String name, String password) {
-        User user;
-        try {
-            Session session = sessionFactory.openSession();
-            Query query = session.createQuery("from User u where u.name = :name and u.password = :password");
-            query.setParameter("name", name);
-            query.setParameter("password", password);
-            user = (User) query.getResultList().get(0);
-            Boolean isExist = session.contains(user);
-            session.close();
-            return isExist;
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-*/
 
     @Override
     public void add(User user) {

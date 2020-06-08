@@ -29,27 +29,7 @@ public class LoginFilter implements Filter {
         String name = req.getParameter("name");
         String password = req.getParameter("password");
 
-        //User user = userServiceImpl.getByNamePassword(name, password);
-
         HttpSession session = req.getSession();
-
-        Long sessionId = (Long) session.getAttribute("id");
-/*
-
-        if (userServiceImpl.isExist(name, password)) {
-            session.setAttribute("id", user.getId());
-            if (userServiceImpl.isExist(name, password)) {
-                if (userServiceImpl.getByNamePassword(name, password).getRole().equalsIgnoreCase("admin")) {
-                    resp.sendRedirect("/admin");
-                } else if (userServiceImpl.getByNamePassword(name, password).getRole().equalsIgnoreCase("user")) {
-                    resp.sendRedirect("/user");
-                }
-            }
-        }else  {
-            resp.sendRedirect("/logout");
-        }
-*/
-
 
         if (name != null && password != null) {
             User user = userServiceImpl.getByNamePassword(name, password);
@@ -65,24 +45,6 @@ public class LoginFilter implements Filter {
             }
         }
         resp.sendRedirect("/logout");
-
-
-/*
-
-            if (sessionId == null) {
-                session.setAttribute("id", user.getId());
-                if (userServiceImpl.isExistUser(name, password)) {
-                    if (userServiceImpl.getUserByNamePassword(name, password).getRole().equalsIgnoreCase("admin")) {
-                        resp.sendRedirect("/admin");
-                    } else if (userServiceImpl.getUserByNamePassword(name, password).getRole().equalsIgnoreCase("user")) {
-                        resp.sendRedirect("/user");
-                    }
-                } else if (!userServiceImpl.isExistUser(name, password) || name == null || password == null) {
-                    resp.sendRedirect("/login");
-                }
-            }
-*/
-
     }
 
     @Override
